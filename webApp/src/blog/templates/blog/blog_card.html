@@ -4,18 +4,19 @@
   <div class="card">
     <div class="card-body pb-2">
       <h3 class="card-title">{{blog.title}}</h3>
-        <p>
-        {%if truncate%}  
-          {{blog.formatted_markdown | truncatewords:30 | safe}}
-        
-        {% else%}
-          {% autoescape off %}{{blog.formatted_markdown | linebreaks }}{% endautoescape %}
-        {% endif%}
-        </p>
-      <h5 class="small">by {{blog.user}}</h5>
+        <div>
+          {%if truncate%}  
+            {{blog.formatted_markdown| truncatechars_html:500 | safe}}
+          
+          {% else%}
+            {{blog.formatted_markdown | safe}}
+          {% endif%}
 
-  
+          
+          
           <div class="mt-3 mb-1">
+            <h5 class="small mt-3 float-right">by {{blog.user}}</h5>
+
             {% if detail%}
               <button class="btn btn-light border rounded-lg" onclick="window.location.href='{{blog.get_absolute_url}}'">View</button>
             {% else%}  
@@ -35,7 +36,12 @@
             {% endif%}
 
           </div>
+        </div>
 
     </div>
+    
   </div>
+
+
+  
 </div>

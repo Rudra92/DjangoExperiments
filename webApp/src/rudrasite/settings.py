@@ -38,8 +38,6 @@ EMAIL_PORT = config('EMAIL_PORT', default=25, cast=int)
 
 INSTALLED_APPS = [
 
-    'markdownx',
-
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.forms',
 
+    'markdownx',
     'crispy_forms',
     'blog',
 ]
@@ -144,4 +143,11 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
 
+MARKDOWNX_MARKDOWN_EXTENSIONS = [
+    'markdown.extensions.extra',
+    'markdown.extensions.codehilite',
+    'markdown.extensions.fenced_code',
 
+]
+
+MARKDOWNX_EDITOR_RESIZABLE = False

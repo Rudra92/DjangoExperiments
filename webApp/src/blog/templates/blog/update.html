@@ -15,9 +15,8 @@ Update Blog {{blog.slug}}
 {%endblock%}
 {% block content %} 
 
-    <div class="d-flex justify-content-center "> 
-
-        <form method="post" action="." id="login-form">  {% csrf_token %}
+    <div class="d-flex justify-content-center w-100">
+        <form class="w-75" method="post" action="." id="login-form">  {% csrf_token %}
             {{form | crispy}}
             <button class="bnt btn-light border rounded-lg float-right" type="submit">Update Blog</button>
         </form>
