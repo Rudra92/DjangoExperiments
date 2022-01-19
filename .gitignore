@@ -1,3 +1,4 @@
 djangovenv/*
 **/.vs/*
 **/__pycache__/*
+**/settings.ini
