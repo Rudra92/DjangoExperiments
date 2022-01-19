@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block head_title %}
+{{blog.slug}}
+{% endblock%}
+
+{% block content %}
+    {% include "blog/blog_card.html" with blog=blog truncate=False detail=False userCanEdit=editable%}
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block head_title %}
+Blogs
+{% endblock%}
+
+{%block blogs %} active {%endblock%}
+
+{% block title%} 
+    <div class="d-flex justify-content-center">
+        <h2 class="m-4">{{title}}</h2> 
+    
+    </div>
+{%endblock%}
+
+{% block content %}
+   
+   <div class="row">
+      {% for obj in object_list %}
+         {% include 'blog/blog_card.html' with blog=obj truncate=True detail=True%}
+      {% endfor %}
+   </div>
+
+
+
+ {% endblock %}

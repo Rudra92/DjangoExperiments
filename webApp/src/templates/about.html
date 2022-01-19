@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block head_title %}
+About
+{% endblock%}
+
+{%block about %} active {%endblock%}
+
+{% block title%} 
+    <div class="d-flex justify-content-center">
+        <h2 class="m-4">{{title}}</h2> 
+    
+    </div>
+{%endblock%}
+
+{% block content %}
+<div class="d-flex justify-content-center">
+<p>{{whoami}}</p>
+</div>
+{% endblock %}}
+
