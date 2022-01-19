@@ -1,19 +1,33 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
+
 
 {% block head_title %}
-Create Blog
+Create your Blog
 {% endblock%}
 
 
-{% block content %}
-<h1>{{title}}</h1>
-    <form method="post" action=".">  {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit">Create blog</button>
-    </form>
+{% block title%} 
+    <div class="d-flex justify-content-center">
+        <h2 class="m-4">{{title}}</h2> 
+    
+    </div>
+{%endblock%}
+{% block content %} 
+
+    <div class="d-flex justify-content-center w-100">
+        <form class="w-75" method="post" action="." id="login-form">  {% csrf_token %}
+            {{form | crispy}}
+            <button class="bnt btn-light border rounded-lg float-right mb-5" type="submit">Create your Blog</button>
+        </form>
+
+        {{form.media}}
+    </div>
 
     <script>
         valid = '{{message}}' 
         if (valid) alert(valid);
     </script>
+
 {% endblock %}}
+

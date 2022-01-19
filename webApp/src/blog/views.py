@@ -38,6 +38,7 @@ def blogpost_create_view(request):
         obj.save()
         form = BlogForm()
         message = "Thank you for creating a blog"
+        return redirect('detail', slug=obj.slug)
 
     context = {'message':message,'title' : "Create your Blog", 'form': form}
     return render(request, template_create, context)
