@@ -14,7 +14,7 @@ blocks:
             - cd webApp/app
             - cache restore
             - pip download --cache-dir .pip_cache -r requirements.txt
-            - ls /home/semaphore/.pip_download_cache/http
+            - tree /home
             - cache store
       prologue:
         commands:
