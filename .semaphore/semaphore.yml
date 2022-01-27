@@ -15,7 +15,7 @@ blocks:
             - cache restore
             - pip download --cache-dir .pip_cache -r requirements.txt
             - cache store
-            - ls .pip_cache
+            - tree .pip_cache
       prologue:
         commands:
           - sem-version python 3.9
