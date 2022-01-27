@@ -1,5 +1,5 @@
 version: v1.0
-name: Django App Production Pipeline
+name: Semaphore Python / Django Example Pipeline
 agent:
   machine:
     type: e1-standard-2
@@ -60,6 +60,7 @@ blocks:
           - sudo apt-get install -y -qq mysql-client
           - mysql --host=0.0.0.0 -uroot -e "create database $DB_NAME"
           - checkout
+          - cd webApp/app
           - cache restore
           - pip install -r requirements.txt --cache-dir .pip_cache
           - nohup python manage.py runserver &
