@@ -1,5 +1,5 @@
 version: v1.0
-name: Semaphore Python / Django Example Pipeline
+name: Django App Production Pipeline
 agent:
   machine:
     type: e1-standard-2
