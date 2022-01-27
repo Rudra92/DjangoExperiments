@@ -12,6 +12,7 @@ blocks:
         - name: 'Job #1'
           commands:
             - sem-version python 3.9
+            - sudo apt get install python-tk
             - checkout
             - cd webApp/app
             - mkdir .pip_cache
@@ -25,8 +26,8 @@ blocks:
       prologue:
         commands:
           - sem-version python 3.9
-          - cd webApp/app
           - checkout
+          - cd webApp/app
           - cache restore
           - pip install --cache-dir .pip_cache -r requirements.txt
       jobs:
