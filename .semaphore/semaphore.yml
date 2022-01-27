@@ -18,7 +18,7 @@ blocks:
             - cd webApp/app
             - cache restore
             - pip download --cache-dir .pip_cache -r requirements.txt
-            - pip show --cache-dir .pip_cache django-markdownx
+            - pip cache dir
             - sh scripts/correct_markdown.sh
             - cache store
   - name: Run Code Analysis
