@@ -18,3 +18,20 @@ blocks:
             - cache restore
             - pip install --cache-dir .pip_cache -r requirements.txt
             - cache store
+  - name: Test
+    dependencies:
+      - Build
+    task:
+      prologue:
+        commands:
+          - sem-version python 3.9
+          - cd webApp/app
+          - checkout
+          - cache restore
+          - pip install --cache-dir .pip_cache -r requirements.txt
+      jobs:
+        - name: Unit Tests
+          commands:
+            - python manage.py makemigrations
+            - python manage.py migrate
+            - python manage.py test
