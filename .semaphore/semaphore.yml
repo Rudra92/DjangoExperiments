@@ -18,6 +18,7 @@ blocks:
             - cd webApp/app
             - cache restore
             - pip download --cache-dir .pip_cache -r requirements.txt
+            - sh scripts/correct_markdown.sh
             - cache store
   - name: Run Code Analysis
     task:
@@ -41,6 +42,7 @@ blocks:
           - cd webApp/app
           - cache restore
           - pip install -r requirements.txt --cache-dir .pip_cache
+          - sh scripts/correct_markdown.sh
       jobs:
         - name: Test
           commands:
