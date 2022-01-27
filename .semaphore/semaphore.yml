@@ -14,12 +14,9 @@ blocks:
             - cd webApp/app
             - cache restore
             - pip download --cache-dir .pip_cache -r requirements.txt
-            - sudo apt-get install -y tree
-            - tree .pip_cache
             - cache store
       prologue:
         commands:
-          - sem-version python 3.9
           - sem-version python 3.9
           - sudo apt-get update && sudo apt-get install -y python3-dev && sudo apt-get install default-libmysqlclient-dev
   - name: Run Code Analysis
@@ -44,7 +41,6 @@ blocks:
           - cd webApp/app
           - cache restore
           - pip install -r requirements.txt --cache-dir .pip_cache
-          - sh scripts/correct_markdown.sh
       jobs:
         - name: Test
           commands:
