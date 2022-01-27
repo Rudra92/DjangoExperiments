@@ -7,10 +7,6 @@ agent:
 blocks:
   - name: Install Dependencies
     task:
-      prologue:
-        commands:
-          - sem-version python 3.9
-          - sudo apt-get update && sudo apt-get install -y python3-dev && sudo apt-get install default-libmysqlclient-dev
       jobs:
         - name: pip
           commands:
@@ -18,7 +14,7 @@ blocks:
             - cd webApp/app
             - cache restore
             - pip download --cache-dir .pip_cache -r requirements.txt
-            - ls /home/semaphore/.pip_download_cache
+            - ls /home/semaphore/.pip_download_cache/http
             - cache store
   - name: Run Code Analysis
     task:
