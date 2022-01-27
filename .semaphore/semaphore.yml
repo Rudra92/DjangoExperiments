@@ -15,6 +15,7 @@ blocks:
             - cache restore
             - pip download --cache-dir .pip_cache -r requirements.txt
             - cache store
+            - sudo apt-get install -y tree
             - tree .pip_cache
       prologue:
         commands:
