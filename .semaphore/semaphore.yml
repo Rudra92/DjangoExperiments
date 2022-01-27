@@ -16,6 +16,9 @@ blocks:
             - pip download --cache-dir .pip_cache -r requirements.txt
             - ls /home/semaphore/.pip_download_cache/http
             - cache store
+      prologue:
+        commands:
+          - sem-version python 3.9
   - name: Run Code Analysis
     task:
       prologue:
