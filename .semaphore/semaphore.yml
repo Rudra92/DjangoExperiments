@@ -1,30 +1,80 @@
 version: v1.0
-name: Initial Pipeline
+name: Django App Production Pipeline
 agent:
   machine:
     type: e1-standard-2
-    os_image: ubuntu2004
+    os_image: ubuntu1804
 blocks:
-  - name: Docker build
-    dependencies: []
+  - name: Install Dependencies
     task:
-      secrets:
-        - name: dockerhub
+      jobs:
+        - name: pip
+          commands:
+            - checkout
+            - cd webApp/app
+            - cache restore
+            - pip download --cache-dir .pip_cache -r requirements.txt
+            - cache store
       prologue:
         commands:
-          - sem-version python 3.7
+          - sem-version python 3.9
+          - sudo apt-get update && sudo apt-get install -y python3-dev && sudo apt-get install default-libmysqlclient-dev
+  - name: Run Code Analysis
+    task:
+      prologue:
+        commands:
+          - sem-version python 3.9
           - checkout
           - cd webApp/app
           - cache restore
-          - mkdir -p .pip_cache
-          - pip install --cache-dir .pip_cache -r requirements.txt
-          - 'python manage.py makemigrations '
-          - python manage.py migrate
-          - cd ..
+          - pip install -r requirements.txt --cache-dir .pip_cache
       jobs:
-        - name: 'Job #1'
+        - name: Pylint
+          commands: []
+  - name: Run Unit Tests
+    task:
+      prologue:
+        commands:
+          - sem-version python 3.9
+          - sem-service start mysql
+          - checkout
+          - cd webApp/app
+          - cache restore
+          - pip install -r requirements.txt --cache-dir .pip_cache
+      jobs:
+        - name: Test
           commands:
-            - 'echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin'
-            - 'docker pull $DOCKER_USERNAME/rudra_webapp:latest || true'
-            - 'docker build --cache-from=$DOCKER_USERNAME/rudra_webapp:latest -t $DOCKER_USERNAME/rudra_webapp:latest .'
-            - 'docker push $DOCKER_USERNAME/rudra_webapp:latest'
+            - python manage.py test
+      env_vars:
+        - name: SECRET_KEY
+          value: this_is_my_key
+  - name: Run Browser Tests
+    task:
+      env_vars:
+        - name: DB_NAME
+          value: pydjango
+      prologue:
+        commands:
+          - sem-version python 3.9
+          - sem-service start mysql
+          - sudo apt-get install -y -qq mysql-client
+          - mysql --host=0.0.0.0 -uroot -e "create database $DB_NAME"
+          - checkout
+          - cd webApp/app
+          - cache restore
+          - pip install -r requirements.txt --cache-dir .pip_cache
+          - nohup python manage.py runserver &
+      jobs:
+        - name: Browser Test
+          commands: []
+  - name: Run Security Tests
+    task:
+      jobs:
+        - name: Deployment Checklist
+          commands:
+            - checkout
+            - cd webApp/app
+            - sem-version python 3.9
+            - cache restore
+            - pip install -r requirements.txt --cache-dir .pip_cache
+            - python manage.py check --deploy --fail-level ERROR
