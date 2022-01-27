@@ -47,7 +47,7 @@ blocks:
             - python manage.py test
       env_vars:
         - name: SECRET_KEY
-          value: this_is_my_key
+          value: 'djecrety-probably-secure-ta6stfa$vx-q(#sh#9646ob9$)she2345eshf)(=p+iv^73453_ztoi07'
   - name: Run Browser Tests
     task:
       env_vars:
