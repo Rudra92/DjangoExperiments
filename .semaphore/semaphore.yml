@@ -21,7 +21,7 @@ blocks:
           - sudo apt-get update && sudo apt-get install -y python3-dev && sudo apt-get install default-libmysqlclient-dev
       env_vars:
         - name: ALLOWED_HOSTS
-          value: '.localhost, .127.0.0.1'
+          value: '[.localhost, .127.0.0.1]'
   - name: Run Code Analysis
     task:
       prologue:
