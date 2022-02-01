@@ -19,6 +19,7 @@ blocks:
         commands:
           - sem-version python 3.9
           - sudo apt-get update && sudo apt-get install -y python3-dev && sudo apt-get install default-libmysqlclient-dev
+      env_vars: []
   - name: Run Code Analysis
     task:
       prologue:
@@ -47,7 +48,9 @@ blocks:
             - python manage.py test
       env_vars:
         - name: SECRET_KEY
-          value: 'djecrety-probably-secure-ta6stfa$vx-q(#sh#9646ob9$)she2345eshf)(=p+iv^73453_ztoi07'
+          value: this_is_my_key
+        - name: ALLOWED_HOSTS
+          value: '[localhost, 127.0.0.1]'
   - name: Run Browser Tests
     task:
       env_vars:
@@ -78,3 +81,6 @@ blocks:
             - cache restore
             - pip install -r requirements.txt --cache-dir .pip_cache
             - python manage.py check --deploy --fail-level ERROR
+      env_vars:
+        - name: ALLOWED_HOSTS
+          value: '[127.0.0.1]'
