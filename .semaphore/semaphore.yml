@@ -19,9 +19,7 @@ blocks:
         commands:
           - sem-version python 3.9
           - sudo apt-get update && sudo apt-get install -y python3-dev && sudo apt-get install default-libmysqlclient-dev
-      env_vars:
-        - name: ALLOWED_HOSTS
-          value: '[.localhost, .127.0.0.1]'
+      env_vars: []
   - name: Run Code Analysis
     task:
       prologue:
@@ -51,6 +49,8 @@ blocks:
       env_vars:
         - name: SECRET_KEY
           value: this_is_my_key
+        - name: ALLOWED_HOSTS
+          value: '[localhost, 127.0.0.1]'
   - name: Run Browser Tests
     task:
       env_vars:
