@@ -81,3 +81,6 @@ blocks:
             - cache restore
             - pip install -r requirements.txt --cache-dir .pip_cache
             - python manage.py check --deploy --fail-level ERROR
+      env_vars:
+        - name: ALLOWED_HOSTS
+          value: '[127.0.0.1]'
