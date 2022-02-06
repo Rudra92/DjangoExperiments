@@ -18,7 +18,16 @@ Update Blog {{blog.slug}}
     <div class="d-flex justify-content-center w-100">
         <form class="w-75" method="post" action="." id="login-form">  {% csrf_token %}
             {{form | crispy}}
-            <button class="bnt btn-light border rounded-lg float-right" type="submit">Update Blog</button>
+            <button class="bnt btn-light border rounded-lg float-right" type="submit" name='update'>Update</button>
+            
+            {% if blog.is_published%}
+                <button class="bnt btn-danger border mr-2 rounded-lg float-right" type="submit" name='unpublish'>Unpublish</button>
+
+            {% else %}
+                <button class="bnt btn-success border mr-2 rounded-lg float-right" type="submit" name='publish'>Publish</button>
+
+
+            {% endif%}
         </form>
 
         {{form.media}}

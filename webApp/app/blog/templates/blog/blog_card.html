@@ -1,11 +1,10 @@
 
-
 <div class="col-12 col-md-8 mb-1 mt-2 mx-auto">
-  <div class="card">
+  <div class="card {% if not blog.is_published and not detail %} bg-dark text-light {% endif %}">
     <div class="card-body pb-2">
-      <h3 class="card-title">{{blog.title}}</h3>
+      <h1 class="card-title">{{blog.title}}</h3>
         <div>
-          {%if truncate%}  
+          {% if truncate%}  
             {{blog.formatted_markdown| truncatechars_html:500 | safe}}
           
           {% else%}
@@ -15,9 +14,11 @@
           
           
           <div class="mt-3 mb-1">
-            <h5 class="small mt-3 float-right">by {{blog.user}}</h5>
+            <h5 class="small mt-3 float-right">
+              {{blog.get_publish_date}} by {{blog.user}}
+            </h5>
 
-            {% if detail%}
+            {% if not detail%}
               <button class="btn btn-light border rounded-lg" onclick="window.location.href='{{blog.get_absolute_url}}'">View</button>
             {% else%}  
               {% if request.user.is_authenticated%}

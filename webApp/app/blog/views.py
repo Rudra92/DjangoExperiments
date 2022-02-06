@@ -18,7 +18,11 @@ template_list = 'blog/list.html'
 # List Objects
 def blogpost_list_view(request):
     # query
-    qs = BlogPost.objects.all()
+    qs = BlogPost.objects.all().published() # custom queryset and manager for published blogs
+
+    if request.user.is_authenticated:
+        my_qs = BlogPost.objects.filter(user=request.user)
+        qs = (qs | my_qs).distinct()
 
     title = "All Blogs"
     context = {'object_list': qs, "action":"blogs", "title":title}
@@ -47,7 +51,7 @@ def blogpost_create_view(request):
 def blogpost_detail_view(request, slug):
     obj = get_object_or_404(BlogPost, slug=slug)
     editable = request.user == obj.user
-    context = {"name" : request.user, "blog":obj, "editable":editable}
+    context = {"name" : request.user, "blog":obj, "editable":editable, 'detail':True}
 
     emotion = obj.processContentwithNRCLex()
     print('\n', emotion.words)
@@ -76,7 +80,17 @@ def blogpost_update_view(request, slug):
     
     if form.is_valid():
         message = "Blog updated successfully"
+        
+        if 'publish' in request.POST:
+            obj.publish()
+
+        if 'unpublish' in request.POST:
+            print("Unpublishing")
+            obj.unpublish()
+
         obj = form.save()
+
+
 
         return redirect('detail', slug=obj.slug)
 

@@ -17,7 +17,7 @@ Blogs
    
    <div class="row">
       {% for obj in object_list %}
-         {% include 'blog/blog_card.html' with blog=obj truncate=True detail=True%}
+         {% include 'blog/blog_card.html' with blog=obj truncate=True detail=False%}
       {% endfor %}
    </div>
 

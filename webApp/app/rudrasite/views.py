@@ -14,7 +14,7 @@ def home_page(request):
     template = "blog/list.html"
     title = "Last Published Blogs"
 
-    qs = list(BlogPost.objects.all())[-5:]
+    qs = list(BlogPost.objects.published())[-5:]
 
     context = {"title": title, "object_list" : qs, "action":"home"}
 
